@@ -15,11 +15,16 @@ CACHE_DIR=$2
 ENV_DIR=$3
 
 if compgen -G "$ENV_DIR/NEXT_PUBLIC_*" > /dev/null; then
+  echo "Exposing public NextJS variables"
+  echo
+
   for public_var in $ENV_DIR/NEXT_PUBLIC_*; do
-    echo "Exposing $(basename $public_var)"
-    export "$(basename $public_var)=$(cat $public_var)"
+    value=$(cat $public_var)
+    echo "$(basename $public_var)=$value"
+    export "$(basename $public_var)=$value"
     :
   done
+
   exit 0
 fi
 
