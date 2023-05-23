@@ -16,7 +16,7 @@ ENV_DIR=$3
 
 if compgen -G "$ENV_DIR/NEXT_PUBLIC_*" > /dev/null; then
   for public_var in $ENV_DIR/NEXT_PUBLIC_*; do
-    echo "Exposing $public_var"
+    echo "Exposing $(basename $public_var)"
     export "$(basename $public_var)=$(cat $public_var)"
     :
   done
