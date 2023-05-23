@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# fail fast
+set -e
+
+# parse and derive params
+BUILD_DIR=$1
+CACHE_DIR=$2
+ENV_DIR=$3
+
+if compgen -G "$ENV_DIR/NEXT_PUBLIC_*" > /dev/null; then
+    echo 'Detected nextjs public env vars'
+    exit 0
+else
+    echo 'No nextjs public env vars detected'
+    exit 1
+fi
+

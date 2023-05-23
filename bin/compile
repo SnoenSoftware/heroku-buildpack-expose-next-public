@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# fail fast
+set -e
+
+# debug
+# set -x
+
+# clean up leaking environment
+unset GIT_DIR
+
+# parse and derive params
+BUILD_DIR=$1
+CACHE_DIR=$2
+ENV_DIR=$3
+
+if compgen -G "$ENV_DIR/NEXT_PUBLIC_*" > /dev/null; then
+  for public_var in $ENV_DIR/NEXT_PUBLIC_*; do
+    echo "Exposing $public_var"
+    export $(basename $public_var)=$(cat $public_var)"
+  done
+  exit 0
+fi
+
+echo "Aborting: THEME environment variable not presentt."
+exit 1 
